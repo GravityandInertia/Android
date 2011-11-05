@@ -4,10 +4,20 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="Hello World, MapActivity"
+
+<Button
+    android:id="@+id/userButton"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="I'm Looking for a Ride!"
     />
+
+<Button
+    android:id="@+id/driverButton"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="I've got Wheels"
+    />
+
 </LinearLayout>
 
