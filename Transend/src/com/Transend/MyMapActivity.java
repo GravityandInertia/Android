@@ -1,6 +1,5 @@
 package com.Transend;
 
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
@@ -26,43 +25,75 @@ public class MyMapActivity extends MapActivity
         Button userButton = (Button) findViewById(R.id.userButton);
         Button driverButton = (Button) findViewById(R.id.driverButton);
 
+        //Defining the onclicklistener
         userButton.setOnClickListener(new View.OnClickListener(){
 
+            //Defining what happens when the user button is clicked
             public void onClick(View v){
             //Calls the login screen
             setContentView(R.layout.login);
 
+            //Telling the system what data to read to know what the submit button looks like
             Button submit = (Button) findViewById(R.id.submitButton);
+                //Defining the OnClickListener for the submit button
                 submit.setOnClickListener(new View.OnClickListener() {
+                    //Defining what happens when the submit button is clicked
                     public void onClick(View view) {
+                        //Sets the layout for the map
                         setContentView(R.layout.map);
 
+                        //fiind the xml attributes of the mapview
                         userMap = (MapView) findViewById(R.id.mapView);
+
+                        //displays the zoom controls
                         userMap.displayZoomControls(true);
                         userMap.setBuiltInZoomControls(true);
+
+                        //defines the map controller
                         MapController userMapController = userMap.getController();
 
+                        //sets the zoom level of the map
                         userMapController.setZoom(15);
 
+                        //temporary point being used as default location of the user
                         GeoPoint myGeoPoint = new GeoPoint(33430000,-112020000);
+
+                        //sets the center of the map on the user
                         userMapController.setCenter(myGeoPoint);
 
+                        //getting a trivial location on the map to show a temporary driver
+                        int latSpan = userMap.getLatitudeSpan();
+                        int longSpan = userMap.getLongitudeSpan();
+
+                        GeoPoint driver1GeoPoint = new GeoPoint(33440000, -112030000);
+
                         List<Overlay> mapOverlays = userMap.getOverlays();
-                        Resources resource = null;
                         Drawable drawable = MyMapActivity.this.getResources()
                                 .getDrawable(R.drawable.icon);
 
+                        MyItemizedOverlay useritemizedoverlay = new MyItemizedOverlay(drawable, MyMapActivity.this);
 
+                        OverlayItem overlayitem = new OverlayItem(myGeoPoint, "I'm the First User!"
+                                , "I'm at Sky Harbor!");
 
+                        OverlayItem driveroverlayitem = new OverlayItem(driver1GeoPoint,"Johnny Cab", "Time Rate: $10/Hr " +
+                                "\nMileage Rate: $2/Mile");
 
-                        MyItemizedOverlay itemizedoverlay = new MyItemizedOverlay(drawable, MyMapActivity.this);
+                        useritemizedoverlay.addOverlay(overlayitem);
+                        useritemizedoverlay.addOverlay(driveroverlayitem);
+                        mapOverlays.add(useritemizedoverlay);
 
-                        OverlayItem overlayitem = new OverlayItem(myGeoPoint, "Hola, Mundo!", "I'm in Phoenix!");
+                        /*if (useritemizedoverlay.onTap(1)) {
+                            setContentView(R.layout.driverprofile);
+                            TextView Name = (TextView) findViewById(R.id.Name);
+                            TextView driverName = (TextView) findViewById(R.id.Driver_Name);
+                            TextView rating = (TextView) findViewById(R.id.Rating);
+                            RatingBar ratingBar = (RatingBar) findViewById(R.id.Rating_Bar);
+                        }       */
 
-                        itemizedoverlay.addOverlay(overlayitem);
-                        mapOverlays.add(itemizedoverlay);
 
                         userMap.invalidate();
+
 
                         launchUserService();
                     }
@@ -126,5 +157,10 @@ public class MyMapActivity extends MapActivity
 
         //userMap.invalidate();
     }
+
+    public void showDriverProfile(){
+        setContentView(R.layout.driverprofile);
+    }
+
 
 }

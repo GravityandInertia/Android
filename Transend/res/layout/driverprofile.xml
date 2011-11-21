@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+    <TextView
+        android:name="@+id/Name"
+        android:text="Name"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+     />
+
+    <TextView
+        android:name="@+id/Driver_Name"
+        android:text="Johnny Cash"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+     />
+
+    <TextView
+        android:name="@+id/Rating"
+        android:text="Driver Rating"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+     />
+
+    <RatingBar
+        android:name="@+id/Rating_Bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:isIndicator="true"
+        android:stepSize="0.1"
+        android:numStars="5"
+        android:rating="4.8" />
+
+    <TextView
+        android:name="@+id/Reviews"
+        android:text="Reviews"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+     />
+
+
+
+
+
+
+</LinearLayout>
