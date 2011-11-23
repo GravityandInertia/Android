@@ -11,23 +11,34 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int icon=0x7f020000;
+        public static final int generic_profile=0x7f020000;
+        public static final int icon=0x7f020001;
+        public static final int transend=0x7f020002;
     }
     public static final class id {
-        public static final int Driver_Name=0x7f050001;
-        public static final int Name=0x7f050000;
-        public static final int Rating=0x7f050002;
+        public static final int Dinner_People=0x7f050007;
+        public static final int DriverPicture=0x7f050001;
+        public static final int Driver_Name=0x7f050002;
+        public static final int Notable_Riders=0x7f050006;
+        public static final int RateCalculatorButton=0x7f050004;
         public static final int Rating_Bar=0x7f050003;
-        public static final int Reviews=0x7f050004;
-        public static final int driverButton=0x7f05000b;
-        public static final int map=0x7f05000c;
-        public static final int mapView=0x7f05000d;
-        public static final int password=0x7f050007;
-        public static final int password_text=0x7f050008;
-        public static final int submitButton=0x7f050009;
-        public static final int userButton=0x7f05000a;
-        public static final int username=0x7f050005;
-        public static final int username_text=0x7f050006;
+        public static final int Review_Layout=0x7f05000a;
+        public static final int Reviews=0x7f050008;
+        public static final int about=0x7f050014;
+        public static final int bookDriverButton=0x7f050005;
+        public static final int driverButton=0x7f050013;
+        public static final int driver_profile_layout=0x7f050000;
+        public static final int first_Reviewer=0x7f05000b;
+        public static final int logo=0x7f050011;
+        public static final int map=0x7f050015;
+        public static final int mapView=0x7f050016;
+        public static final int password=0x7f05000e;
+        public static final int password_text=0x7f05000f;
+        public static final int scrollview=0x7f050009;
+        public static final int submitButton=0x7f050010;
+        public static final int userButton=0x7f050012;
+        public static final int username=0x7f05000c;
+        public static final int username_text=0x7f05000d;
     }
     public static final class layout {
         public static final int driverprofile=0x7f030000;

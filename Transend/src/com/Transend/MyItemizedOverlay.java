@@ -3,6 +3,7 @@ package com.Transend;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
@@ -66,7 +67,7 @@ public class MyItemizedOverlay extends ItemizedOverlay {
     }
 
 
-    public void setOnClickListener(Dialog.OnClickListener listener) {
+    public void setOnClickListener(DialogInterface.OnClickListener listener) {
         mDialogListener = listener;
     }
 }

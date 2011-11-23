@@ -1,48 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:name="@+id/driver_profile_layout"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
+              android:layout_height="fill_parent"
+              android:orientation="vertical"
+              android:padding="10px">
+
+    <LinearLayout
+            android:name="driver_profile_top"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+        <ImageView
+            android:name="@+id/DriverPicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/generic_profile"
+            android:layout_gravity="right"
+            />
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:name="driver_profile_data"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10px"    >
+
+            <TextView
+                android:name="@+id/Driver_Name"
+                android:text="Johnny Cash"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="24sp"
+             />
+
+            <RatingBar
+                style="?android:attr/ratingBarStyleSmall"
+                android:name="@+id/Rating_Bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:stepSize="0.1"
+                android:numStars="5"
+                android:rating="4.8"
+                android:layout_gravity="center"
+                android:paddingTop="5px"
+                android:paddingBottom="5px"
+
+            />
+
+            <Button
+                android:id="@+id/RateCalculatorButton"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:text="Rate Calculator"
+                />
+
+            <Button
+                android:id="@+id/bookDriverButton"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:text="Book this Driver"/>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
     <TextView
-        android:name="@+id/Name"
-        android:text="Name"
+        android:name="@+id/Notable_Riders"
+        android:text="Notable Riders"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:textSize="18sp"
+        android:textStyle="bold"
+     />
+
+    <TextView
+        android:name="@+id/Notable_Riders"
+        android:text="Governor Jan Brewer, Mayor Phil Gordon, Madonna, Justin Timberlake"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
      />
 
     <TextView
-        android:name="@+id/Driver_Name"
-        android:text="Johnny Cash"
+        android:name="@+id/Dinner_People"
+        android:text="3 People live or dead I want to have dinner with"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
+        android:textSize="18sp"
+        android:textStyle="bold"
      />
 
     <TextView
-        android:name="@+id/Rating"
-        android:text="Driver Rating"
+        android:name="@+id/Dinner_People"
+        android:text="Steve Jobs, Jason Fried, Gordon Ramsay"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
      />
 
-    <RatingBar
-        android:name="@+id/Rating_Bar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:isIndicator="true"
-        android:stepSize="0.1"
-        android:numStars="5"
-        android:rating="4.8" />
 
     <TextView
         android:name="@+id/Reviews"
         android:text="Reviews"
+        android:textSize="18sp"
+        android:textStyle="bold"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
      />
 
 
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+                android:id="@+id/Review_Layout"
+                android:padding="5px"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:orientation="vertical">
 
 
 
+                <TextView
+                    android:id="@+id/first_Reviewer"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="LowRider85008"
+                    android:layout_gravity="left"/>
+
+                 <RatingBar
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:name="@+id/Rating_Bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:isIndicator="true"
+                        android:stepSize="0.1"
+                        android:numStars="5"
+                        android:rating="4.8"
+                        android:layout_gravity="left"
+                    />
+
+                <TextView
+                    android:id="@+id/first_Reviewer"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="He was a great story teller. Very Entertaining. He told me he once shot a man in Reno just to watch him die. I'm still not sure if that was true or not but he seemed nice enough"
+                    android:layout_gravity="left"
+                    android:gravity="fill_horizontal"/>
+
+                <ImageView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:src="@android:drawable/divider_horizontal_dark"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

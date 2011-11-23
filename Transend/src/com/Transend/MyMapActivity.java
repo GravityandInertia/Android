@@ -1,10 +1,13 @@
 package com.Transend;
 
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import com.google.android.maps.*;
 
 import java.util.List;
@@ -13,6 +16,26 @@ public class MyMapActivity extends MapActivity
 {
     private static MapView userMap;
     private MapView driverMap;
+    private DialogInterface.OnClickListener mProfileDialogListener;
+
+    {
+        mProfileDialogListener = new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                //Initializing view  items for the driver profile
+                TextView driverName = (TextView) findViewById(R.id.Driver_Name);
+                //TextView rating = (TextView) findViewById(R.id.Rating);
+                //RatingBar ratingBar = (RatingBar) findViewById(R.id.Rating_Bar);
+
+                //Setting up the generic driver profile picture
+
+                ImageView driverPic = (ImageView) findViewById(R.id.DriverPicture);
+
+                //Setting the view to the driver profile
+                setContentView(R.layout.driverprofile);
+            }
+        };
+    }
 
     /** Called when the activity is first created. */
     @Override
@@ -83,18 +106,12 @@ public class MyMapActivity extends MapActivity
                         useritemizedoverlay.addOverlay(driveroverlayitem);
                         mapOverlays.add(useritemizedoverlay);
 
-                        /*if (useritemizedoverlay.onTap(1)) {
-                            setContentView(R.layout.driverprofile);
-                            TextView Name = (TextView) findViewById(R.id.Name);
-                            TextView driverName = (TextView) findViewById(R.id.Driver_Name);
-                            TextView rating = (TextView) findViewById(R.id.Rating);
-                            RatingBar ratingBar = (RatingBar) findViewById(R.id.Rating_Bar);
-                        }       */
+                        useritemizedoverlay.setOnClickListener(mProfileDialogListener);
 
-
+                        //updates the view of the map
                         userMap.invalidate();
 
-
+                        //launches the service that runs check your location and retrieving driver location updates
                         launchUserService();
                     }
 

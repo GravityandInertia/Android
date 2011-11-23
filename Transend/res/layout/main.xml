@@ -3,7 +3,16 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:padding="10px"
     >
+
+<ImageView
+    android:id="@+id/logo"
+    android:layout_gravity="center"
+    android:src="@drawable/transend"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"/>
+
 
 <Button
     android:id="@+id/userButton"
@@ -17,6 +26,20 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:text="I've got Wheels"
+    />
+
+<Button
+    android:id="@+id/about"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:text="About"
+    />
+
+<Button
+    android:id="@+id/about"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:text="Help"
     />
 
 </LinearLayout>
