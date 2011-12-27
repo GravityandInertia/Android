@@ -84,8 +84,8 @@ public class TransendService extends Service {
     }
 
     private void returnMyLocationToMaps(Location location) {
-        //todo is this calling the updatemap method for the already running instance of MyMapActivity
-        MyMapActivity.updateUserMap(myLocation);
+        //todo is this calling the updatemap method for the already running instance of RiderMapActivity
+        com.Transend.RiderMapActivity.updateUserMap(myLocation);
     }
 
 

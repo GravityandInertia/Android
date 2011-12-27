@@ -36,7 +36,7 @@
     />
 
 <Button
-    android:id="@+id/about"
+    android:id="@+id/help"
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
     android:text="Help"

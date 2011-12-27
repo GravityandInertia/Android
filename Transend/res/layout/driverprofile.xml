@@ -92,7 +92,7 @@
 
     <TextView
         android:name="@+id/Dinner_People"
-        android:text="3 People live or dead I want to have dinner with"
+        android:text="3 People alive or dead I want to have dinner with"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:textSize="18sp"
