@@ -19,6 +19,9 @@ public class StartActivity extends Activity{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+       /* Intent intent;
+        intent = new Intent(StartActivity.this,GPSService.class);
+        startService(intent); */
 
         //Setting up buttons
         Button endUser_button = (Button) findViewById(R.id.userButton);
@@ -30,9 +33,9 @@ public class StartActivity extends Activity{
         endUser_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 //Defines what happens when endUser button is clicked
-                RiderMapActivity riderMapActivity = new RiderMapActivity();
+                //LoginActivity loginActivity = new LoginActivity();
                 Intent intent;
-                intent = new Intent(StartActivity.this, RiderMapActivity.class);
+                intent = new Intent(StartActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -40,7 +43,7 @@ public class StartActivity extends Activity{
         driver_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 //Defines what happens when driver button is clicked
-                DriverMapActivity riderMapActivity = new DriverMapActivity();
+                DriverMapActivity driveMapActivity = new DriverMapActivity();
                 Intent intent;
                 intent = new Intent(StartActivity.this, DriverMapActivity.class);
                 startActivity(intent);
@@ -50,7 +53,7 @@ public class StartActivity extends Activity{
         help_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
               //Defines what happens when help button is clicked
-                HelpActivity riderMapActivity = new HelpActivity();
+                HelpActivity helpActivity = new HelpActivity();
                 Intent intent;
                 intent = new Intent(StartActivity.this, HelpActivity.class);
                 startActivity(intent);
@@ -60,6 +63,10 @@ public class StartActivity extends Activity{
         about_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
             //Defines what happens when about button is clicked
+                AboutActivity aboutActivity = new AboutActivity();
+                Intent intent;
+                intent = new Intent(StartActivity.this, AboutActivity.class);
+                startActivity(intent);
             }
         });
     }

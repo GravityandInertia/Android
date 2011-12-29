@@ -1,6 +1,7 @@
 package com.Transend;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.location.*;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ public class GPSService extends Service {
     private Location mpreviousLocation;
     private Location mlocation;
     private GpsStatus gpsStatus = null;
-    private LocationManager locationManager = null;
+    private LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     private Criteria criteria = null;
     private String locationProvider = null;
     private GpsStatus.Listener gpsListener;
@@ -29,8 +30,8 @@ public class GPSService extends Service {
     private double longitude;
     private float radius;
     private long expiration;
-    private long minTime = 30000;
-    private float minDistance = 1;
+    private long minTime = 0;
+    private float minDistance = 0;
     private float time;
     private Looper looper;
     private LocationListener locationListener = new LocationListener() {
@@ -39,6 +40,14 @@ public class GPSService extends Service {
             {
                 mpreviousLocation = mlocation;
                 mlocation = location;
+                Intent broadcastIntent;
+                broadcastIntent = new Intent();
+                broadcastIntent.putExtra("Location",mlocation);
+                sendBroadcast(broadcastIntent);
+            }
+            else
+            {
+                mpreviousLocation = location;
             }
         }
 

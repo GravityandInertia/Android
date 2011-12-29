@@ -1,14 +1,16 @@
 package com.Transend;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.google.android.maps.*;
 
 import java.io.BufferedReader;
@@ -21,159 +23,58 @@ import java.util.List;
 public class RiderMapActivity extends MapActivity
 {
     private static MapView userMap;
-    private MapView driverMap;
-    private DialogInterface.OnClickListener mProfileDialogListener;
+    private DialogInterface.OnClickListener mProfileDialogListener = new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialogInterface, int i) {
+            Intent intent;
+            intent = new Intent(RiderMapActivity.this, DriverProfileActivity.class);
+            startActivity(intent);
+        }
+    };
 
-    {
-        mProfileDialogListener = new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialogInterface, int i) {
+    private DialogInterface.OnClickListener mUserDialogListener = new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialogInterface, int i) {
+        }
+    };
 
-                //Initializing view  items for the driver profile
-                TextView driverName = (TextView) findViewById(R.id.Driver_Name);
 
-                //Setting up the generic driver profile picture
-                ImageView driverPic = (ImageView) findViewById(R.id.DriverPicture);
+    private GeoPoint myGeoPoint = new GeoPoint(33430000,-112020000);
+    int zoomLevel = 15;
 
-                //Setting the view to the driver profile
-                setContentView(R.layout.driverprofile);
-
-                Button rateCalculator = (Button) findViewById(R.id.RateCalculatorButton);
-                Button bookNow = (Button) findViewById(R.id.bookDriverButton);
-
-                View.OnClickListener rateCalcListener = new View.OnClickListener(){
-                    public void onClick(View view){
-                        setContentView(R.layout.ratecalculator);
-                    }
-                };
-
-                View.OnClickListener bookDriverListener = new View.OnClickListener() {
-                    public void onClick(View view) {
-                        View layout = findViewById(R.id.driver_profile_layout);
-                        layout.setVisibility(View.INVISIBLE);
-
-                    }
-                };
-
-                rateCalculator.setOnClickListener(rateCalcListener);
-                bookNow.setOnClickListener(bookDriverListener);
-            }
-        };
-    }
-
-    /** Called when the activity is first created. */
     @Override
     public void onCreate(final Bundle icicle)
     {
         super.onCreate(icicle);
-        /*setContentView(R.layout.main);
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationListener ll = new mylocationlistener();
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,10000, 1, ll);
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if(location != null){
+            double lat = location.getLatitude()* 1000000.0;
+            double longitude = location.getLongitude()* 1000000.0;
+            int geoLat =(int) (lat);
+            int geoLong = (int) (longitude);
+            myGeoPoint = new GeoPoint(geoLat,geoLong);
+        }
 
-       //Define two buttons
-       Button userButton = (Button) findViewById(R.id.userButton);
-       Button driverButton = (Button) findViewById(R.id.driverButton);
-
-       //Defining the onclicklistener
-       userButton.setOnClickListener(new View.OnClickListener(){*/
-
-        //Defining what happens when the user button is clicked
-        //public void onClick(View v){
-        //Calls the login screen
-        setContentView(R.layout.login);
-
-        //Telling the system what data to read to know what the submit button looks like
-        Button submit = (Button) findViewById(R.id.submitButton);
-        //Defining the OnClickListener for the submit button
-        submit.setOnClickListener(new View.OnClickListener() {
-            //Defining what happens when the submit button is clicked
-            public void onClick(View view) {
-
-                //setup the map with proper overlays
-                setupMapView(new GeoPoint(33440000, -112020000));
-
-                //launches the service that runs check your location and retrieving driver location updates
-                launchUserService();
-                //}
-
-
-                // });
-            }
-        });
-
-       /* driverButton.setOnClickListener(new View.OnClickListener(){
-
-            public void onClick(View v){
-                //Calls the login screen
-                setContentView(R.layout.login);
-
-                Button submit = (Button) findViewById(R.id.submitButton);
-                submit.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View view) {
-                        EditText etUsername = (EditText) findViewById(R.id.username);
-                        EditText etPassword = (EditText) findViewById(R.id.password);
-
-                        String sUsername = etUsername.getText().toString();
-                        String sPassword = etPassword.getText() .toString();
-
-                        GetUserData();
-
-
-                        setContentView(R.layout.map);
-
-                        driverMap = (MapView) findViewById(R.id.mapView);
-                        driverMap.displayZoomControls(true);
-                        driverMap.setBuiltInZoomControls(true);
-
-                        launchDriverService();
-                    }
-
-                });
-            }
-        });*/
-
-
+        GeoPoint driverGeoPoint = new GeoPoint(myGeoPoint.getLatitudeE6()+
+                5000,myGeoPoint.getLongitudeE6()+5000);
+        setupMapView(driverGeoPoint,myGeoPoint);
     }
 
-    private void setupMapView(GeoPoint driverGeoPoint) {
-        //Sets the layout for the map
+    private void setupMapView(GeoPoint driverGeoPoint, GeoPoint userGeoPoint) {
         setContentView(R.layout.map);
 
-        //fiind the xml attributes of the mapview
         userMap = (MapView) findViewById(R.id.mapView);
-
-        //displays the zoom controls
         userMap.displayZoomControls(true);
         userMap.setBuiltInZoomControls(true);
 
-        //defines the map controller
         MapController userMapController = userMap.getController();
 
-        //sets the zoom level of the map
-        userMapController.setZoom(15);
-
-        //temporary point being used as default location of the user
-        GeoPoint myGeoPoint = new GeoPoint(33430000,-112020000);
-
-        //sets the center of the map on the user
+        //set map controls
+        userMapController.setZoom(zoomLevel);
         userMapController.setCenter(myGeoPoint);
 
-        GeoPoint driver1GeoPoint = driverGeoPoint;
-
-        List<Overlay> mapOverlays = userMap.getOverlays();
-        Drawable drawable = RiderMapActivity.this.getResources()
-                .getDrawable(R.drawable.icon);
-
-        MyItemizedOverlay useritemizedoverlay = new MyItemizedOverlay(drawable, RiderMapActivity.this);
-
-        OverlayItem overlayitem = new OverlayItem(myGeoPoint, "I'm the First User!"
-                , "I'm at Sky Harbor!");
-
-        OverlayItem driveroverlayitem = new OverlayItem(driver1GeoPoint,"Johnny Cab", "Time Rate: $10/Hr " +
-                "\nMileage Rate: $2/Mile");
-
-        useritemizedoverlay.addOverlay(overlayitem);
-        useritemizedoverlay.addOverlay(driveroverlayitem);
-        mapOverlays.add(useritemizedoverlay);
-
-        useritemizedoverlay.setOnClickListener(mProfileDialogListener);
+        setOverlay(driverGeoPoint,userGeoPoint);
 
         //updates the view of the map
         userMap.invalidate();
@@ -183,6 +84,7 @@ public class RiderMapActivity extends MapActivity
         BufferedReader in = null;
         StringBuilder stringBuilder = new StringBuilder(200);
         stringBuilder.append("hello");
+
         try {
             // Create a URL for the desired page
             URL url = new URL("http://transendapp.appspot.com/");
@@ -195,27 +97,17 @@ public class RiderMapActivity extends MapActivity
                 stringBuilder.append(str);
             }
             in.close();
-        } catch (MalformedURLException e) {
-        } catch (IOException e) {
+        }
+
+        catch (MalformedURLException e) {
+        }
+
+        catch (IOException e) {
         }
 
         setContentView(R.layout.response);
-
         TextView responseText = (TextView) findViewById(R.id.showme);
         responseText.setText(stringBuilder.toString());
-
-    }
-
-
-
-
-    private void GetUserData() {
-    }
-
-    private void launchDriverService() {
-    }
-
-    private void launchUserService() {
     }
 
     @Override
@@ -223,34 +115,70 @@ public class RiderMapActivity extends MapActivity
         return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public static void updateUserMap(Location location)
+    public void updateUserMap(GeoPoint driverGeoPoint, GeoPoint userGeoPoint)
     {
-        GeoPoint myPoint;
-
-        //double latitude = location.getLatitude();
-        //double longitude = location.getLongitude();
-
-
-        //myPoint = new GeoPoint(35650000,-11200000);
-
-        //todo program view update of the map in android
-        //MapController mapController =  userMap.getController();
-
-        //mapController.setZoom(19);
-        //mapController.setCenter(myPoint);
-
-        //userMap.invalidate();
+        MapController userMapController = userMap.getController();
+        setOverlay(driverGeoPoint,userGeoPoint);
+        userMap.invalidate();
     }
 
-    public void showDriverProfile(){
-        setContentView(R.layout.driverprofile);
+    private class mylocationlistener implements LocationListener {
+        @Override
+        public void onLocationChanged(Location location) {
+            if (location != null) {
+                Log.d("LOCATION CHANGED", location.getLatitude() + "");
+                Log.d("LOCATION CHANGED", location.getLongitude() + "");
+                Toast.makeText(RiderMapActivity.this,
+                        location.getLatitude() + "" + location.getLongitude(),
+                        Toast.LENGTH_LONG).show();
+
+                double lat = location.getLatitude()* 1000000.0;
+                double longitude = location.getLongitude()* 1000000.0;
+                int geoLat =(int) (lat);
+                int geoLong = (int) (longitude);
+                myGeoPoint = new GeoPoint(geoLat,geoLong);
+                userMap.getOverlays().clear();
+                Toast.makeText(RiderMapActivity.this,myGeoPoint.toString(),Toast.LENGTH_LONG).show();
+
+                //setting mock driver location
+                geoLat =(int) (myGeoPoint.getLatitudeE6()+5000);
+                geoLong =(int) (myGeoPoint.getLongitudeE6()+5000);
+                GeoPoint driverGeoPoint = new GeoPoint(geoLat,geoLong);
+                updateUserMap(driverGeoPoint, myGeoPoint);
+            }
+        }
+        @Override
+        public void onProviderDisabled(String provider) {
+        }
+        @Override
+        public void onProviderEnabled(String provider) {
+        }
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
     }
 
-    public void login(){
-        Intent intent = new Intent(RiderMapActivity.this,StartActivity.class);
-        startActivityForResult(intent, RESULT_OK);
+    private void setOverlay(GeoPoint driverGeoPoint, GeoPoint userGeoPoint){
+        List<Overlay> drivermapOverlays = userMap.getOverlays();
+        List<Overlay> mapOverlays = userMap.getOverlays();
+        Drawable drawable = RiderMapActivity.this.getResources()
+                .getDrawable(R.drawable.icon);
+
+        UserItemizedOverlay useritemizedoverlay = new UserItemizedOverlay(drawable, RiderMapActivity.this);
+        MyItemizedOverlay driveritemizedoverlay = new MyItemizedOverlay(drawable, RiderMapActivity.this);
+
+        OverlayItem overlayitem = new OverlayItem(userGeoPoint, "I'm the First User!"
+                , "I'm at Sky Harbor!");
+
+        OverlayItem driveroverlayitem = new OverlayItem(driverGeoPoint,"Johnny Cab", "Time Rate: $10/Hr " +
+                "\nMileage Rate: $2/Mile");
+
+        useritemizedoverlay.addOverlay(overlayitem);
+        driveritemizedoverlay.addOverlay(driveroverlayitem);
+        mapOverlays.add(useritemizedoverlay);
+        drivermapOverlays.add(driveritemizedoverlay);
+
+        driveritemizedoverlay.setOnClickListener(mProfileDialogListener);
+        useritemizedoverlay.setOnClickListener(mUserDialogListener);
     }
-
-
-
 }

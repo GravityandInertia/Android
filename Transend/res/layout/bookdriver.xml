@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
+
+    <TextView android:id="@+id/bookdrivertext"
+              android:layout_height="wrap_content"
+              android:layout_width="fill_parent"
+              android:text="Destination"
+              android:textSize="24sp"/>
+
+    <Spinner android:id="@+id/destinationspinner"
+                            android:layout_height="wrap_content"
+                            android:layout_width="fill_parent"/>
+
+ <!--   <EditText android:id="@+id/destinationbox"
+              android:layout_height="wrap_content"
+              android:layout_width="fill_parent"/>     -->
+
+    <LinearLayout android:id="@+id/requestcontainer"
+                  android:layout_height="wrap_content"
+                  android:layout_width="fill_parent"
+                  android:orientation="horizontal">
+
+        <Button android:id="@+id/BookButton"
+                android:layout_width="wrap_content"
+                android:layout_gravity="left"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Book"/>
+
+        <Button android:id="@+id/BackButton"
+                android:layout_width="wrap_content"
+                android:layout_gravity="left"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Back"/>
+
+    </LinearLayout>
+
+  <!--  <com.google.android.maps.MapView
+        android:id="@+id/destinationmapView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:enabled="true"
+        android:clickable="true"
+        android:apiKey="00xCBxo2nUq1p7UR85CC324-r4Io78SzClO2cFg"
+        />   -->
+
+</LinearLayout>

@@ -51,7 +51,7 @@ public class TransendService extends Service {
 
         getDriverLocationsfromWeb();
 
-        returnMyLocationToMaps(myLocation);//todo program this method
+      //  returnMyLocationToMaps(myLocation);//todo program this method
         
         returnDriverLocationstoMaps();
 
@@ -83,10 +83,10 @@ public class TransendService extends Service {
     }
     }
 
-    private void returnMyLocationToMaps(Location location) {
-        //todo is this calling the updatemap method for the already running instance of RiderMapActivity
-        com.Transend.RiderMapActivity.updateUserMap(myLocation);
-    }
+   /* private void returnMyLocationToMaps(Location location) {
+        //todo is this calling the updatemap method for the already running instance of LoginActivity
+        RiderMapActivity.updateUserMap(myLocation);
+    }   */
 
 
     private void getMyLocation() throws IOException {
