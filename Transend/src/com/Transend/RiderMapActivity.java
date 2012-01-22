@@ -9,15 +9,21 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.maps.*;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RiderMapActivity extends MapActivity
@@ -80,35 +86,6 @@ public class RiderMapActivity extends MapActivity
         userMap.invalidate();
     }
 
-    private void getLocation() throws IOException {
-        BufferedReader in = null;
-        StringBuilder stringBuilder = new StringBuilder(200);
-        stringBuilder.append("hello");
-
-        try {
-            // Create a URL for the desired page
-            URL url = new URL("http://transendapp.appspot.com/");
-
-            // Read all the text returned by the server
-            in = new BufferedReader(new InputStreamReader(url.openStream()));
-            String str;
-            while ((str = in.readLine()) != null) {
-                // str is one line of text; readLine() strips the newline character(s)
-                stringBuilder.append(str);
-            }
-            in.close();
-        }
-
-        catch (MalformedURLException e) {
-        }
-
-        catch (IOException e) {
-        }
-
-        setContentView(R.layout.response);
-        TextView responseText = (TextView) findViewById(R.id.showme);
-        responseText.setText(stringBuilder.toString());
-    }
 
     @Override
     protected boolean isRouteDisplayed() {
@@ -120,6 +97,26 @@ public class RiderMapActivity extends MapActivity
         MapController userMapController = userMap.getController();
         setOverlay(driverGeoPoint,userGeoPoint);
         userMap.invalidate();
+        JSONObject jsonObject = writeJSON(myGeoPoint,"Brandon");
+        postMyLocationtoWeb(jsonObject);
+
+    }
+
+    private JSONObject writeJSON(GeoPoint geoPoint, String nickname) {
+        JSONObject json = new JSONObject();
+            try{
+                json.put("Nickname",nickname);
+                json.put("Latitude",geoPoint.getLatitudeE6());
+                json.put("Longitude",geoPoint.getLongitudeE6());
+            } 
+            
+            catch (JSONException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+        
+        Toast.makeText(RiderMapActivity.this,json.toString(),Toast.LENGTH_LONG).show();
+
+        return json;
     }
 
     private class mylocationlistener implements LocationListener {
@@ -180,5 +177,25 @@ public class RiderMapActivity extends MapActivity
 
         driveritemizedoverlay.setOnClickListener(mProfileDialogListener);
         useritemizedoverlay.setOnClickListener(mUserDialogListener);
+    }
+
+    private void postMyLocationtoWeb(JSONObject jsonObject) {
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost("http://transendapp.appspot.com");//todo figure out how to post this
+
+        try {
+            // Add your data
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+            nameValuePairs.add(new BasicNameValuePair("data",jsonObject.toString()));
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            // Execute HTTP Post Request
+            HttpResponse response = httpclient.execute(httppost);
+
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+        }
     }
 }

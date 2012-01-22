@@ -89,7 +89,14 @@
             <intent-filter>
             </intent-filter>
         </activity>
+
+        <activity android:name=".ConnectingActivity">
+            <intent-filter>
+            </intent-filter>
+        </activity>
         <service android:name=".GPSService"/>
+
+
 
         <service android:name=".TransendService"/>
     </application>

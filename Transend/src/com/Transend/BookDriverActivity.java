@@ -28,7 +28,7 @@ public class BookDriverActivity extends Activity{
         @Override
         public void onClick(View view) {
             Intent intent;
-            intent = new Intent(BookDriverActivity.this,ConnectingActivity.class);
+            intent = new Intent(BookDriverActivity.this, ConnectingActivity.class);
             startActivity(intent);
         }
     };
@@ -49,33 +49,15 @@ public class BookDriverActivity extends Activity{
         Button backButton = (Button) findViewById(R.id.BackButton);
         Button driverButton = (Button) findViewById(R.id.BookButton);
 
-
-        //MapView destinationMap = (MapView) findViewById(R.id.destinationmapView);
-        //destinationMap.displayZoomControls(true);
-        //destinationMap.setBuiltInZoomControls(true);
-
-        //MapController userMapController = destinationMap.getController();
-
-        //sets the zoom level of the map
-        //userMapController.setZoom(15);
-
-        //temporary point being used as default location of the user
-        //GeoPoint myGeoPoint = new GeoPoint(33430000,-112020000);
-
-        //sets the center of the map on the user
-        //userMapController.setCenter(myGeoPoint);
-
-        //updates the view of the map
-        //destinationMap.invalidate();
-
-
+        backButton.setOnClickListener(backListener);
+        driverButton.setOnClickListener(bookListener);
     }
 
     public class MyOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
 
     public void onItemSelected(AdapterView<?> parent,
         View view, int pos, long id) {
-      Toast.makeText(parent.getContext(), "The planet is " +
+      Toast.makeText(parent.getContext(), "The destination is " +
               parent.getItemAtPosition(pos).toString(), Toast.LENGTH_LONG).show();
     }
 

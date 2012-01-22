@@ -67,20 +67,20 @@ public class TransendService extends Service {
         HttpPost httppost = new HttpPost("http://transendapp.appspot.com");//todo figure out how to post this
 
         try {
-        // Add your data
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-        nameValuePairs.add(new BasicNameValuePair("longitude", "This is Awesome!"));
-        nameValuePairs.add(new BasicNameValuePair("latitude", "AndDev is Cool!"));
-        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            // Add your data
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+            nameValuePairs.add(new BasicNameValuePair("longitude", "This is Awesome!"));
+            nameValuePairs.add(new BasicNameValuePair("latitude", "AndDev is Cool!"));
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
-        // Execute HTTP Post Request
-        HttpResponse response = httpclient.execute(httppost);
+            // Execute HTTP Post Request
+            HttpResponse response = httpclient.execute(httppost);
 
-    } catch (ClientProtocolException e) {
-        // TODO Auto-generated catch block
-    } catch (IOException e) {
-        // TODO Auto-generated catch block
-    }
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+        }
     }
 
    /* private void returnMyLocationToMaps(Location location) {
